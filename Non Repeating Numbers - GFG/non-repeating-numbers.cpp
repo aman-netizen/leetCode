@@ -9,18 +9,25 @@ public:
     vector<int> singleNumber(vector<int> nums) 
     {
         // Code here.
-        unordered_map<int,int> mp;
-        vector<int> ans;
+        int xorr = 0;
         for(int i=0;i<nums.size();i++){
-            mp[nums[i]]++;
+            xorr^=nums[i];
         }
-        for(auto it:mp){
-            if(it.second==1){
-                ans.push_back(it.first);
+        int num = xorr&-xorr;
+        int res1=0;
+        int res2=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]&num){
+                res1^=nums[i];
+            }else{
+                res2^=nums[i];
+                
             }
         }
-        sort(ans.begin(),ans.end());
-        return ans;
+        if(res1<=res2){
+            return {res1,res2};
+        }
+            return {res2,res1};
     }
 };
 
